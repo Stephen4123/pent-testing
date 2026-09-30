@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VulnApp Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --surface-color: #1e293b;
+            --primary: #3b82f6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: "Inter", system-ui, -apple-system, sans-serif;
+        }
+        .card {
+            background-color: var(--surface-color);
+            border: 1px solid #334155;
+            border-radius: 0.75rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <nav class="border-b border-slate-700 bg-slate-900/50 backdrop-blur-sm sticky top-0 z-10">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded bg-blue-500 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/20">V</div>
+                    <a href="/" class="font-semibold text-lg tracking-tight">VulnApp</a>
+                </div>
+                <div class="flex space-x-6 text-sm font-medium text-slate-300">
+                    <a href="/login" class="hover:text-white transition-colors">Login</a>
+                    <a href="/guestbook" class="hover:text-white transition-colors">Guestbook</a>
+                    <a href="/admin" class="hover:text-white transition-colors">Admin</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="flex-grow max-w-5xl mx-auto px-4 py-8 w-full">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="border-t border-slate-800 text-center py-6 text-sm text-slate-500">
+        &copy; 2026 VulnApp Demo. Intentionally Vulnerable.
+    </footer>
+</body>
+</html>

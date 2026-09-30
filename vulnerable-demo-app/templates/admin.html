@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="flex items-center justify-between mb-8">
+        <h2 class="text-3xl font-bold text-rose-400">Admin Dashboard</h2>
+        <span class="bg-rose-500/20 text-rose-400 px-3 py-1 rounded-full text-xs font-bold border border-rose-500/30">PROTECTED AREA</span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="card p-6">
+            <h3 class="text-lg font-bold text-slate-200 mb-4">System Status</h3>
+            <div class="space-y-3">
+                <div class="flex justify-between">
+                    <span class="text-slate-400">CPU Usage</span>
+                    <span class="text-emerald-400">12%</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">Memory</span>
+                    <span class="text-amber-400">64%</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">Active Users</span>
+                    <span class="text-blue-400">1,204</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card p-6">
+            <h3 class="text-lg font-bold text-slate-200 mb-4">Database Records</h3>
+            <ul class="space-y-2 text-sm text-slate-400">
+                <li class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                    admin (ID: 1) - SUPERUSER
+                </li>
+                <li class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-slate-500"></div>
+                    john (ID: 2)
+                </li>
+                <li class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-slate-500"></div>
+                    jane (ID: 3)
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="text-xs text-slate-500">
+        Hint: This page does not verify session tokens. It just relies on a client-side cookie or nothing at all!
+    </div>
+</div>
+{% endblock %}

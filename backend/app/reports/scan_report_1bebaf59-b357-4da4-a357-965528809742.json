@@ -1,0 +1,49 @@
+{
+  "report_metadata": {
+    "target_url": "http://localhost:8000",
+    "scan_date": "2026-07-13 09:24:17 UTC",
+    "scan_duration": "230.44 seconds",
+    "total_findings": 1,
+    "severity_summary": {
+      "CRITICAL": 1,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0,
+      "INFO": 0
+    }
+  },
+  "reconnaissance": {
+    "resolved_ip": "127.0.0.1",
+    "dns_records": {
+      "A": [
+        "127.0.0.1"
+      ],
+      "AAAA": [],
+      "MX": [],
+      "TXT": [],
+      "NS": [],
+      "CNAME": []
+    },
+    "subdomains": [],
+    "detected_technologies": [
+      "Nginx",
+      "React"
+    ]
+  },
+  "executive_summary": "During the scheduled security assessment, a comprehensive penetration test was conducted against the target environment at `http://localhost:8000` to evaluate its resilience against external threats. The assessment identified a single, critical-severity vulnerability, with no high- or medium-severity issues detected. Left unaddressed, this critical vulnerability poses an immediate risk of system compromise, potentially allowing unauthorized actors to bypass security controls and access sensitive resources. We strongly recommend immediate remediation of this finding to safeguard the application's integrity and mitigate operational risk.",
+  "findings": [
+    {
+      "title": "SQL Injection in /api/users",
+      "description": "The application is vulnerable to blind time-based SQL injection on the `/api/users/profile` endpoint via the `id` parameter. During testing, injecting a payload designed to trigger a database delay (`SLEEP(5)`) resulted in a response latency of over 5 seconds. This confirms that user input is directly concatenated into a SQL query. An attacker can exploit this to extract sensitive database schema information and data, bypass authentication, or potentially execute administrative commands.",
+      "severity": "CRITICAL",
+      "confidence": "Low",
+      "cve_id": "CVE-2023-SQLI",
+      "remediation": "1. Implement Parameterized Queries (Prepared Statements): Ensure all database queries treat user inputs as data rather than executable code. For example, in Node.js/pg, use: `db.query('SELECT * FROM users WHERE id = $1', [userId])` instead of string interpolation.\n2. Enforce Strict Input Validation: Validate that the `id` parameter strictly conforms to expected formats (such as UUID or integer) before processing.\n3. Apply the Principle of Least Privilege: Restrict the database user account used by the application to only the necessary read/write permissions required for normal operations.",
+      "evidence": {
+        "request": "POST /api/users/profile\n{\n  \"id\": \"1' OR (SELECT 1 FROM (SELECT(SLEEP(5)))a)--\",\n  \"auth_token\": \"eyJhbGciOiJIUzI1NiI...\"\n}",
+        "response": "Response Time: 5012ms\nHTTP/1.1 200 OK\nContent-Type: application/json"
+      },
+      "source_scanner": "SQL Injection Scanner"
+    }
+  ]
+}

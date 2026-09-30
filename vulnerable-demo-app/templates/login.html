@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-[60vh]">
+    <div class="card p-8 w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+        
+        {% if error %}
+        <div class="bg-rose-500/10 border border-rose-500/50 text-rose-400 p-3 rounded mb-4 text-sm">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form method="POST" action="/login">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-slate-300 mb-2">Username</label>
+                <input type="text" name="username" class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 text-white" placeholder="admin">
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-slate-300 mb-2">Password</label>
+                <input type="password" name="password" class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 text-white" placeholder="••••••••">
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+                Sign In
+            </button>
+        </form>
+        <div class="mt-4 text-center text-xs text-slate-500">
+            Hint: The form uses raw SQL string concatenation.
+        </div>
+    </div>
+</div>
+{% endblock %}

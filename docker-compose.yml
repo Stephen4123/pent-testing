@@ -1,0 +1,35 @@
+services:
+
+  db:
+    image: postgres:15
+    container_name: pentest_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: pentest
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  zap:
+    image: zaproxy/zap-stable
+    container_name: pentest_zap
+    restart: always
+    environment:
+      - JAVA_OPTS=-Xmx1024m -Xms512m
+    command: zap.sh -daemon -host 0.0.0.0 -port 8081 -config api.disablekey=true -config api.addrs.addr.name=".*" -config api.addrs.addr.regex=true
+    ports:
+      - "8081:8081"
+
+  dvwa:
+    image: vulnerables/web-dvwa
+    container_name: pentest_dvwa
+    restart: always
+    ports:
+      - "8082:80"
+
+
+volumes:
+  postgres_data:

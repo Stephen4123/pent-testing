@@ -1,0 +1,51 @@
+{
+  "report_metadata": {
+    "target_url": "http://127.0.0.1:8000",
+    "scan_date": "2026-07-11 11:18:29 UTC",
+    "scan_duration": "10.35 seconds",
+    "total_findings": 1,
+    "severity_summary": {
+      "CRITICAL": 1,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0,
+      "INFO": 0
+    }
+  },
+  "reconnaissance": {
+    "resolved_ip": "127.0.0.1",
+    "dns_records": {
+      "A": [
+        "127.0.0.1"
+      ],
+      "AAAA": [],
+      "MX": [],
+      "TXT": [],
+      "NS": [],
+      "CNAME": []
+    },
+    "subdomains": [
+      "api.127.0.0.1"
+    ],
+    "detected_technologies": [
+      "Nginx",
+      "React"
+    ]
+  },
+  "executive_summary": "Automated security audit was successfully completed. Review findings and remediation guidelines.",
+  "findings": [
+    {
+      "title": "SQL Injection in /api/users",
+      "description": "SQL Injection occurs when untrusted input is directly concatenated into SQL query strings. An attacker can manipulate queries to extract data, modify tables, or execute database administrative operations.",
+      "severity": "CRITICAL",
+      "confidence": "Low",
+      "cve_id": "CVE-2023-SQLI",
+      "remediation": "1. Use Parameterized Queries: Replace dynamic SQL strings with prepared statements or ORM binding methods (e.g., SQLAlchemy parameters).\n2. Apply Input Validation: Use schema validation (like Pydantic) to verify that parameters match expected formats.\n3. Principle of Least Privilege: Ensure the database user has minimal necessary permissions.",
+      "evidence": {
+        "request": "POST /api/users/profile\n{\n  \"id\": \"1' OR (SELECT 1 FROM (SELECT(SLEEP(5)))a)--\",\n  \"auth_token\": \"eyJhbGciOiJIUzI1NiI...\"\n}",
+        "response": "Response Time: 5012ms\nHTTP/1.1 200 OK\nContent-Type: application/json"
+      },
+      "source_scanner": "SQL Injection Scanner"
+    }
+  ]
+}

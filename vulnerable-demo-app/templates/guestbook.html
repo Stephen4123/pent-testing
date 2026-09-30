@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="flex items-center justify-between mb-8">
+        <h2 class="text-3xl font-bold">Guestbook Search</h2>
+    </div>
+
+    <div class="card p-6 mb-8">
+        <form method="GET" action="/guestbook" class="flex gap-4">
+            <input type="text" name="q" value="{{ request.args.get('q', '') }}" class="flex-grow bg-slate-800 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-emerald-500 text-white" placeholder="Search entries...">
+            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-6 rounded-lg transition-colors">
+                Search
+            </button>
+        </form>
+    </div>
+
+    {% if search_query %}
+    <div class="bg-slate-800 border border-slate-700 p-6 rounded-lg mb-8">
+        <!-- VULNERABLE: The query is rendered using the 'safe' filter, preventing HTML escaping -->
+        <h3 class="text-xl text-slate-300 mb-4">Results for: <span class="text-white font-bold">{{ search_query | safe }}</span></h3>
+        <p class="text-slate-500 italic">No entries matched your search.</p>
+    </div>
+    {% endif %}
+
+    <div class="text-xs text-slate-500 mt-8">
+        Hint: The search query is reflected in the page without sanitization. Try injecting a script tag.
+    </div>
+</div>
+{% endblock %}

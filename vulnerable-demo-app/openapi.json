@@ -1,0 +1,39 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Vulnerable Demo App API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/admin/users": {
+      "get": {
+        "summary": "Get all users (No Auth)",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "summary": "Get a user (SQLi vulnerable)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    }
+  }
+}
